@@ -1,87 +1,64 @@
-<div align="center">
-  <img alt="Logo" src="https://raw.githubusercontent.com/bchiang7/v4/main/src/images/logo.png" width="100" />
-</div>
-<h1 align="center">
-  brittanychiang.com - v4
-</h1>
-<p align="center">
-  The fourth iteration of <a href="https://brittanychiang.com" target="_blank">brittanychiang.com</a> built with <a href="https://www.gatsbyjs.org/" target="_blank">Gatsby</a> and hosted with <a href="https://www.netlify.com/" target="_blank">Netlify</a>
-</p>
-<p align="center">
-  Previous iterations:
-  <a href="https://github.com/bchiang7/v1" target="_blank">v1</a>,
-  <a href="https://github.com/bchiang7/v2" target="_blank">v2</a>,
-  <a href="https://github.com/bchiang7/bchiang7.github.io" target="_blank">v3</a>
-</p>
-<p align="center">
-  <a href="https://app.netlify.com/sites/brittanychiang/deploys" target="_blank">
-    <img src="https://api.netlify.com/api/v1/badges/1963b488-7b78-48c9-9e2d-6fb5e47ab3af/deploy-status" alt="Netlify Status" />
-  </a>
-</p>
+# calwatson.com
 
-![demo](https://raw.githubusercontent.com/bchiang7/v4/main/src/images/demo.png)
+Personal site for Cal Watson — founder, operator, and engineer. A quiet home base, not a product landing page or a résumé. Built to deploy on Vercel at [calwatson.com](https://calwatson.com).
 
-## 🚨 Forking this repo (please read!)
+## Stack
 
-Many people have contacted me asking me if they can use this code for their own website, and the answer to that question is usually **yes, with attribution**.
+- [Next.js](https://nextjs.org) (App Router) + TypeScript
+- [Tailwind CSS](https://tailwindcss.com) v4
+- `create-next-app` defaults otherwise (`src/`, ESLint, `@/*` imports)
 
-I value keeping my site open source, but as you all know, _**plagiarism is bad**_. It's always disheartening whenever I find that someone has copied my site without giving me credit. I spent a non-trivial amount of effort building and designing this iteration of my website, and I am proud of it! All I ask of you all is to not claim this effort as your own.
+## Run locally
 
-Please also note that I did not build this site with the intention of it being a starter theme, so if you have questions about implementation, please refer to the [Gatsby docs](https://www.gatsbyjs.org/docs/).
+```bash
+npm install
+npm run dev
+```
 
-### TL;DR
+Open [http://localhost:3000](http://localhost:3000).
 
-Yes, you can fork this repo. Please give me proper credit by linking back to [brittanychiang.com](https://brittanychiang.com). Thanks!
+Other scripts:
 
-## 🛠 Installation & Set Up
+```bash
+npm run build   # production build
+npm start       # serve the production build
+npm run lint    # ESLint
+```
 
-1. Install the Gatsby CLI
+## Project layout
 
-   ```sh
-   npm install -g gatsby-cli
-   ```
+- `src/app/page.tsx` — homepage composition
+- `src/app/layout.tsx` — fonts, metadata, Open Graph
+- `src/app/opengraph-image.tsx` — generated social card
+- `src/app/icon.tsx` / `apple-icon.tsx` — monogram favicon
+- `src/components/` — hero, building now, how I work, path, elsewhere, footer
+- `src/lib/links.ts` — RosterJoy, LinkedIn, GitHub
 
-2. Install and use the correct version of Node using [NVM](https://github.com/nvm-sh/nvm)
+## Deploy on Vercel
 
-   ```sh
-   nvm install
-   ```
+1. Push this repo to GitHub: `https://github.com/calwatson/calwatson.com`
+2. In [Vercel](https://vercel.com), **Add New Project** and import that repository
+3. Framework preset should be Next.js. Leave the build command as `next build` (or `npm run build`) and the output as the default
+4. Deploy
 
-3. Install dependencies
+### Attach the custom domain
 
-   ```sh
-   yarn
-   ```
+1. In the Vercel project: **Settings → Domains**
+2. Add `calwatson.com` and `www.calwatson.com`
+3. At your DNS host, follow Vercel’s records (typically an A record for the apex and a CNAME for `www`)
+4. Wait for HTTPS to provision. Prefer the apex (`calwatson.com`) as the primary and redirect `www` to it, or the reverse — pick one and keep it consistent with `metadataBase` in `src/app/layout.tsx` (currently `https://calwatson.com`)
 
-4. Start the development server
+## First push to GitHub
 
-   ```sh
-   npm start
-   ```
+From this directory, after creating an empty `calwatson/calwatson.com` repo:
 
-## 🚀 Building and Running for Production
+```bash
+git init
+git add .
+git commit -m "Initial calwatson.com personal site"
+git branch -M main
+git remote add origin https://github.com/calwatson/calwatson.com.git
+git push -u origin main
+```
 
-1. Generate a full static production build
-
-   ```sh
-   npm run build
-   ```
-
-1. Preview the site as it will appear once deployed
-
-   ```sh
-   npm run serve
-   ```
-
-## 🎨 Color Reference
-
-| Color          | Hex                                                                |
-| -------------- | ------------------------------------------------------------------ |
-| Navy           | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) `#0a192f` |
-| Light Navy     | ![#112240](https://via.placeholder.com/10/0a192f?text=+) `#112240` |
-| Lightest Navy  | ![#233554](https://via.placeholder.com/10/303C55?text=+) `#233554` |
-| Slate          | ![#8892b0](https://via.placeholder.com/10/8892b0?text=+) `#8892b0` |
-| Light Slate    | ![#a8b2d1](https://via.placeholder.com/10/a8b2d1?text=+) `#a8b2d1` |
-| Lightest Slate | ![#ccd6f6](https://via.placeholder.com/10/ccd6f6?text=+) `#ccd6f6` |
-| White          | ![#e6f1ff](https://via.placeholder.com/10/e6f1ff?text=+) `#e6f1ff` |
-| Green          | ![#64ffda](https://via.placeholder.com/10/64ffda?text=+) `#64ffda` |
+Then import the repo in Vercel as above.
