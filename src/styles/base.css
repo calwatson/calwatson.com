@@ -1,0 +1,105 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-arc);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.glyph {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-right: 0.45em;
+  vertical-align: middle;
+  border: 1.5px solid currentColor;
+}
+
+.glyph-arc {
+  border-radius: 50%;
+  background: transparent;
+  color: var(--c-arc);
+}
+.glyph-org {
+  border-radius: 2px;
+  background: var(--c-org);
+  border-color: var(--c-org);
+}
+.glyph-product {
+  background: var(--c-product);
+  border-color: var(--c-product);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  border: 0;
+  width: 0.85em;
+  height: 0.85em;
+}
+.glyph-skill {
+  border-radius: 50%;
+  background: var(--c-skill);
+  border-color: var(--c-skill);
+}
+.glyph-school {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: var(--c-school);
+  border: 0;
+}
+.glyph-principle {
+  transform: rotate(45deg) scale(0.75);
+  background: transparent;
+  color: var(--c-principle);
+}
+.glyph-note {
+  border-radius: 50%;
+  border-style: dashed;
+  color: var(--c-skill);
+}
+.glyph-core {
+  border-radius: 50%;
+  background: var(--c-person);
+  border-color: var(--c-person);
+}
