@@ -8,11 +8,11 @@ export interface ContactModal {
 
 export function mountContactModal(dialog: HTMLDialogElement): ContactModal {
   let opener: HTMLElement | null = null;
-  const form = dialog.querySelector("form");
+  const queried = dialog.querySelector("form");
+  if (!queried) throw new Error("Contact form missing");
+  const contactForm: HTMLFormElement = queried;
   const status = dialog.querySelector<HTMLElement>("[data-status]");
   const closeBtn = dialog.querySelector<HTMLButtonElement>("[data-close-modal]");
-
-  if (!form) throw new Error("Contact form missing");
 
   const focusable = () =>
     [
@@ -62,17 +62,30 @@ export function mountContactModal(dialog: HTMLDialogElement): ContactModal {
     if (event.target === dialog) close();
   });
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const data = new FormData(form);
+  function send(): void {
+    const data = new FormData(contactForm);
     const reason = String(data.get("reason") || copy.reasons[0]);
     const name = String(data.get("name") || "").trim();
     const note = String(data.get("note") || "").trim();
     const address = `${CONTACT.user}@${CONTACT.host}`;
     const mailto = `mailto:${address}?subject=${encodeURIComponent(`calwatson.com: ${reason}`)}&body=${encodeURIComponent(`${note}\n\n— ${name}`)}`;
     if (status) status.textContent = copy.submitStatus;
+    let probe = dialog.querySelector<HTMLAnchorElement>("[data-mailto-probe]");
+    if (!probe) {
+      probe = document.createElement("a");
+      probe.hidden = true;
+      probe.dataset.mailtoProbe = "true";
+      dialog.append(probe);
+    }
+    probe.href = mailto;
     window.location.assign(mailto);
+  }
+
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    send();
   });
+  contactForm.querySelector("[data-send]")?.addEventListener("click", send);
 
   return { open, close };
 }

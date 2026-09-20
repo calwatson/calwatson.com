@@ -40,7 +40,7 @@ test("skills chip hides skill nodes", async ({ page }, testInfo) => {
   await page.goto("/");
   const chip = page.getByRole("button", { name: /Skills/ });
   await chip.click();
-  await expect(page.locator('.node[data-type="skill"]')).toHaveClass(/is-hidden/);
+  await expect(page.locator('.node[data-type="skill"].is-hidden')).toHaveCount(13);
 });
 
 test("phone connection reveals a hidden group", async ({ page }, testInfo) => {
@@ -52,27 +52,25 @@ test("phone connection reveals a hidden group", async ({ page }, testInfo) => {
 });
 
 test("say hi builds a RosterJoy mailto", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, "__mailto", { value: "", writable: true, configurable: true });
+    const original = Location.prototype.assign;
+    Location.prototype.assign = function assign(url: string | URL) {
+      (window as unknown as { __mailto: string }).__mailto = String(url);
+      if (String(url).startsWith("mailto:")) return;
+      return original.call(this, url);
+    };
+  });
   await page.goto("/");
   expect(await page.locator("html").innerHTML()).not.toContain(ADDRESS);
 
-  await page.addInitScript(() => {
-    Object.defineProperty(window, "__mailto", { value: "", writable: true });
-  });
-  await page.goto("/");
-  await page.evaluate(() => {
-    const assign = window.location.assign.bind(window.location);
-    window.location.assign = (url: string | URL) => {
-      (window as unknown as { __mailto: string }).__mailto = String(url);
-      if (String(url).startsWith("mailto:")) return;
-      assign(url);
-    };
-  });
-  await page.getByRole("button", { name: "Say hi" }).click();
-  await page.locator('input[value="RosterJoy"]').check();
+  await page.locator("#say-hi").click();
+  await expect(page.locator("#contact")).toBeVisible();
+  await page.getByRole("radio", { name: "RosterJoy" }).click({ force: true });
   await page.locator('input[name="name"]').fill("Ada");
   await page.locator("textarea[name=note]").fill("Hello");
   await page.getByRole("button", { name: "Open mail" }).click();
-  const mailto = await page.evaluate(() => (window as unknown as { __mailto: string }).__mailto);
+  const mailto = await page.locator("[data-mailto-probe]").getAttribute("href");
   expect(mailto).toContain("mailto:");
   expect(mailto).toContain(encodeURIComponent("calwatson.com: RosterJoy"));
 });

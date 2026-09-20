@@ -145,7 +145,7 @@ export function wireInteraction(
   layout.simulation.on("tick", () => tick(layout));
 
   function bottomInset(): number {
-    if (isPhoneViewport()) return Math.max(callbacks.panelHeight(), 150) + 46;
+    if (isPhoneViewport()) return Math.max(callbacks.panelHeight(), 220) + 96;
     return 30;
   }
 

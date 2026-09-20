@@ -116,7 +116,10 @@ zoomIn?.addEventListener("click", () => graph.zoomBy(1.2));
 zoomOut?.addEventListener("click", () => graph.zoomBy(1 / 1.2));
 zoomReset?.addEventListener("click", () => graph.fit());
 
-requestAnimationFrame(() => graph.fit());
+void document.fonts.ready.then(() => {
+  graph.fit();
+  requestAnimationFrame(() => graph.fit());
+});
 
 let lastW = canvas.clientWidth;
 let lastH = canvas.clientHeight;
