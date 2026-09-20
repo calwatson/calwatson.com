@@ -1,0 +1,115 @@
+.panel {
+  background: var(--panel);
+  border-left: 1px solid var(--line);
+  padding: 22px 22px 28px;
+  overflow: auto;
+  color: var(--ink);
+}
+
+.panel-kicker {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.68rem;
+  color: var(--ink2);
+}
+
+.panel-title {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.7rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.panel-sub {
+  margin: 0 0 12px;
+  color: var(--c-arc);
+  font-weight: 600;
+}
+
+.panel-blurb {
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.panel-close {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+
+.panel-action {
+  display: inline-flex;
+  background: var(--c-arc);
+  color: #062015;
+  text-decoration: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.now-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--c-arc) 18%, transparent);
+  color: var(--c-arc);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.panel-connections ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.conn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+  text-align: left;
+}
+
+.conn-rel {
+  color: var(--ink2);
+  font-size: 0.82rem;
+}
+
+.conn-label {
+  color: var(--c-arc);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

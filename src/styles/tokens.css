@@ -1,0 +1,30 @@
+:root {
+  --bg: #07120e;
+  --panel: #0c1a14;
+  --panel-2: #10231c;
+  --line: #1c3126;
+  --ink: #e8f3ec;
+  --ink2: #98b0a4;
+  --ink3: #6e8a7d;
+  --c-arc: #5fe0a3;
+  --c-org: #6db8ff;
+  --c-product: #ffb047;
+  --c-school: #ff8b78;
+  --c-skill: #b9cbc1;
+  --c-person: #f4fff8;
+  --c-link: #d5e6dc;
+  --c-principle: #e8f3ec;
+  --edge: #2a4a3a;
+  --danger: #ff8b78;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", Georgia, serif;
+  --font-body: "Figtree", system-ui, sans-serif;
+  --font-hand: "Caveat", cursive;
+  --bar-h: 56px;
+  --chips-h: 46px;
+  --panel-w: 340px;
+  --radius: 12px;
+}
+
+html {
+  color-scheme: dark;
+}

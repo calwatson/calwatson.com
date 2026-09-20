@@ -1,0 +1,107 @@
+.contact {
+  max-width: 480px;
+  width: calc(100% - 32px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0;
+}
+
+.contact::backdrop {
+  background: rgba(3, 8, 6, 0.72);
+}
+
+.contact-card {
+  padding: 24px;
+}
+
+.contact h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.contact-lead {
+  margin: 0 0 16px;
+  color: var(--ink2);
+}
+
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.reasons label {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.reasons input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reasons input:checked + span,
+.reasons label:has(input:checked) {
+  border-color: var(--c-arc);
+  color: var(--c-arc);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.field span {
+  color: var(--ink2);
+  font-size: 0.8rem;
+}
+
+.field input,
+.field textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.field input[name="name"] {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.field textarea {
+  min-height: 110px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    var(--line) 28px
+  );
+  line-height: 28px;
+  resize: vertical;
+}
+
+.contact-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.contact-status {
+  min-height: 1.2em;
+  color: var(--ink2);
+  font-size: 0.85rem;
+}

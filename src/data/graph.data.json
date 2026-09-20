@@ -1,0 +1,432 @@
+{
+  "copy": {
+    "taglineBefore": "Founder and operator. Engineer who builds for ",
+    "taglineHighlight": "real people",
+    "taglineAfter": ".",
+    "searchPlaceholder": "Find a node",
+    "sayHi": "Say hi",
+    "introKicker": "How to read this",
+    "introTitle": "A map, not a résumé.",
+    "introBody": [
+      "Dots are things I've worked at, worked on, learned, or believe. Lines say how they connect.",
+      "Tap a node to read it and see what it touches. The filters above show or hide kinds of node.",
+      "Along the mint spine, earlier runs to now.",
+      "Dashed nodes are drafts. The pulsing dashed ring is an open slot."
+    ],
+    "introPhone": [
+      "Dots are things I've worked at, worked on, learned, or believe. Lines say how they connect.",
+      "Tap a node to read it and see what it touches. The filters above show or hide kinds of node."
+    ],
+    "hint": "Drag to pan. Scroll to zoom. Drag a node to move it.",
+    "close": "Close",
+    "connections": "Connections",
+    "now": "Now",
+    "claimSlot": "Claim the slot",
+    "visit": "Visit",
+    "modalTitle": "Say hi",
+    "modalLead": "A short note is enough. LinkedIn works too if mail isn't handy.",
+    "reasonLabel": "What this is about",
+    "reasons": ["Working together", "RosterJoy", "Talking shop", "Just saying hi"],
+    "nameLabel": "Your name",
+    "namePlaceholder": "Sign here",
+    "noteLabel": "A note",
+    "notePlaceholder": "What's on your mind",
+    "send": "Open mail",
+    "modalClose": "Close",
+    "submitStatus": "Opening your mail app. If nothing happens, LinkedIn works too."
+  },
+  "types": {
+    "person": { "shape": "circle", "size": 820, "r": 16, "group": "core" },
+    "place": { "shape": "circle", "size": 48, "r": 4.5, "group": "core" },
+    "invite": { "shape": "ring", "size": 420, "r": 12, "group": "core" },
+    "link": { "shape": "wye", "size": 110, "r": 7, "group": "core" },
+    "arc": { "shape": "ring", "size": 420, "r": 12, "group": "arc" },
+    "org": { "shape": "square", "size": 160, "r": 8, "group": "org" },
+    "product": { "shape": "star", "size": 520, "r": 13, "group": "product" },
+    "usecase": { "shape": "circle", "size": 48, "r": 4.5, "group": "product" },
+    "skill": { "shape": "circle", "size": 48, "r": 4.5, "group": "skill" },
+    "school": { "shape": "triangle", "size": 140, "r": 8, "group": "school" },
+    "principle": { "shape": "diamond", "size": 140, "r": 8, "group": "principle" },
+    "note": { "shape": "circle", "size": 64, "r": 6, "group": "note" }
+  },
+  "groups": {
+    "core": { "label": "Core", "kind": "Core", "hiddenByDefaultOnPhones": false },
+    "arc": { "label": "Chapters", "kind": "Chapter", "hiddenByDefaultOnPhones": false },
+    "org": { "label": "Organizations", "kind": "Organization", "hiddenByDefaultOnPhones": false },
+    "product": { "label": "RosterJoy", "kind": "RosterJoy", "hiddenByDefaultOnPhones": false },
+    "skill": { "label": "Skills", "kind": "Skill", "hiddenByDefaultOnPhones": true },
+    "school": { "label": "Schools", "kind": "School", "hiddenByDefaultOnPhones": true },
+    "principle": { "label": "Principles", "kind": "Principle", "hiddenByDefaultOnPhones": true },
+    "note": { "label": "Notes", "kind": "Note", "hiddenByDefaultOnPhones": true }
+  },
+  "nodes": [
+    {
+      "id": "cal",
+      "type": "person",
+      "label": "Cal Watson",
+      "sub": "Founder and operator",
+      "blurb": "Engineer who builds for real people. I design and ship software that has to survive contact with ordinary life — neighbors, teams, and the work in between.",
+      "now": true
+    },
+    {
+      "id": "columbia",
+      "type": "place",
+      "label": "Columbia, SC",
+      "blurb": "Home base. Building from Columbia, South Carolina."
+    },
+    {
+      "id": "invite",
+      "type": "invite",
+      "label": "Your name here",
+      "sub": "Open slot",
+      "blurb": "An open slot on the map. If we should be connected, claim it."
+    },
+    {
+      "id": "github",
+      "type": "link",
+      "label": "GitHub",
+      "blurb": "Code and experiments.",
+      "url": "https://github.com/calwatson",
+      "urlLabel": "github.com/calwatson"
+    },
+    {
+      "id": "linkedin",
+      "type": "link",
+      "label": "LinkedIn",
+      "blurb": "The best public place to find me besides this map.",
+      "url": "https://www.linkedin.com/in/jcfive",
+      "urlLabel": "linkedin.com/in/jcfive"
+    },
+    {
+      "id": "engineer",
+      "type": "arc",
+      "label": "Engineer",
+      "idx": 0,
+      "blurb": "Software Developer, then engineering roles. The start of the path — writing the thing, not only talking about it."
+    },
+    {
+      "id": "leader",
+      "type": "arc",
+      "label": "Leader",
+      "idx": 1,
+      "blurb": "VP of Software Development and consulting leadership. Teams, delivery, and the work of making other people successful."
+    },
+    {
+      "id": "architect",
+      "type": "arc",
+      "label": "Architect / SE",
+      "idx": 2,
+      "blurb": "Senior Sales Engineer, then Senior Solutions Architect. Architecture that has to survive a customer conversation."
+    },
+    {
+      "id": "founder",
+      "type": "arc",
+      "label": "Founder",
+      "idx": 3,
+      "blurb": "Building RosterJoy. Earlier runs to now, along the mint spine.",
+      "now": true
+    },
+    {
+      "id": "merrill",
+      "type": "org",
+      "label": "Merrill Lynch",
+      "sub": "Software Developer",
+      "arc": "engineer",
+      "blurb": "Software Developer. The first professional engineering seat."
+    },
+    {
+      "id": "micropact",
+      "type": "org",
+      "label": "Micropact",
+      "sub": "Engineering",
+      "arc": "engineer",
+      "blurb": "Engineering role. Building software in a product organization."
+    },
+    {
+      "id": "secondmarket",
+      "type": "org",
+      "label": "Secondmarket",
+      "sub": "Engineering",
+      "arc": "engineer",
+      "blurb": "Engineering role. Private-market infrastructure before the category had a household name."
+    },
+    {
+      "id": "infusion",
+      "type": "org",
+      "label": "Infusion",
+      "sub": "Senior / Lead Consultant",
+      "arc": "leader",
+      "blurb": "Senior / Lead Consultant. Delivery leadership inside client work."
+    },
+    {
+      "id": "avanade",
+      "type": "org",
+      "label": "Avanade",
+      "sub": "Group Manager / Senior Consultant",
+      "arc": "leader",
+      "blurb": "Group Manager / Senior Consultant. Consulting that sits between engineering and the business."
+    },
+    {
+      "id": "fixflyer",
+      "type": "org",
+      "label": "Fix Flyer",
+      "sub": "VP of Software Development",
+      "arc": "leader",
+      "blurb": "VP of Software Development. Leading the engineering organization."
+    },
+    {
+      "id": "cisco",
+      "type": "org",
+      "label": "Cisco",
+      "sub": "Senior Sales Engineer",
+      "arc": "architect",
+      "blurb": "Senior Sales Engineer. Customer-facing demos, architecture conversations, and making a technical product make sense."
+    },
+    {
+      "id": "cursor",
+      "type": "org",
+      "label": "Cursor",
+      "sub": "Solutions Architect",
+      "arc": "architect",
+      "now": true,
+      "blurb": "Solutions Architect. Helping teams put agentic coding to work on real codebases.",
+      "url": "https://cursor.com",
+      "urlLabel": "cursor.com"
+    },
+    {
+      "id": "mendix",
+      "type": "org",
+      "label": "Mendix",
+      "sub": "Senior Solutions Architect",
+      "arc": "architect",
+      "blurb": "Senior Solutions Architect. Enterprise integrations, SSO and session management, and private-cloud infrastructure."
+    },
+    {
+      "id": "rosterjoy",
+      "type": "product",
+      "label": "RosterJoy",
+      "sub": "Elegant signup sheets for real life",
+      "arc": "founder",
+      "now": true,
+      "blurb": "Potlucks, meal trains, volunteer shifts, snack schedules — the sign-up still lives in a spreadsheet or a group thread. RosterJoy is a quieter alternative: name the moment, add the slots, send a link that looks like you meant it.",
+      "url": "https://www.rosterjoy.com",
+      "urlLabel": "rosterjoy.com"
+    },
+    {
+      "id": "snacks",
+      "type": "usecase",
+      "label": "Snack schedules",
+      "blurb": "The weekly list that falls apart the week someone forgets. A signup sheet instead of a thread."
+    },
+    {
+      "id": "meals",
+      "type": "usecase",
+      "label": "Meal trains",
+      "blurb": "Neighbors feeding neighbors. Slots, dates, and a link that doesn't disappear."
+    },
+    {
+      "id": "volunteer",
+      "type": "usecase",
+      "label": "Volunteer shifts",
+      "blurb": "Who's actually coming. A roster people can claim without creating an account."
+    },
+    {
+      "id": "potlucks",
+      "type": "usecase",
+      "label": "Potlucks",
+      "blurb": "So two people don't both bring dessert. Name the dishes, send the link."
+    },
+    {
+      "id": "software-engineering",
+      "type": "skill",
+      "label": "Software engineering",
+      "blurb": "The craft underneath everything else. Still the starting point."
+    },
+    {
+      "id": "sales-engineering",
+      "type": "skill",
+      "label": "Sales engineering",
+      "blurb": "Making a technical product make sense to the people who have to live with it."
+    },
+    {
+      "id": "customer-facing-demos",
+      "type": "skill",
+      "label": "Customer-facing demos",
+      "blurb": "Show the thing. Don't hide behind slides."
+    },
+    {
+      "id": "knowledge-graphs",
+      "type": "skill",
+      "label": "Knowledge graphs",
+      "blurb": "This site is one. Things and the relations between them, instead of a list."
+    },
+    {
+      "id": "agentic-coding",
+      "type": "skill",
+      "label": "Agentic coding",
+      "blurb": "Agents on real codebases. Architecture still has to come first."
+    },
+    {
+      "id": "solutions-architecture",
+      "type": "skill",
+      "label": "Solutions architecture",
+      "blurb": "The shape of the problem, then the tools that can carry it."
+    },
+    {
+      "id": "customer-success",
+      "type": "skill",
+      "label": "Customer success",
+      "blurb": "After the sale. Helping people actually use what they bought."
+    },
+    {
+      "id": "team-leadership",
+      "type": "skill",
+      "label": "Team leadership",
+      "blurb": "Making other people successful. Hiring, delivery, and the quiet work in between."
+    },
+    {
+      "id": "consulting",
+      "type": "skill",
+      "label": "Consulting",
+      "blurb": "Inside someone else's constraints. Listen, then build."
+    },
+    {
+      "id": "low-code",
+      "type": "skill",
+      "label": "Low-code platforms",
+      "blurb": "Mendix and the class of tools that let teams ship when the bottleneck isn't syntax."
+    },
+    {
+      "id": "aws-kubernetes",
+      "type": "skill",
+      "label": "AWS and Kubernetes",
+      "blurb": "Private-cloud infrastructure. The unglamorous layer that has to actually run."
+    },
+    {
+      "id": "sso-sessions",
+      "type": "skill",
+      "label": "SSO and sessions",
+      "blurb": "Enterprise identity, session management, and the integrations around them."
+    },
+    {
+      "id": "go-to-market",
+      "type": "skill",
+      "label": "Go-to-market",
+      "blurb": "How RosterJoy meets the people it's for. Neighbors first, not a launch deck."
+    },
+    {
+      "id": "emory",
+      "type": "school",
+      "label": "Emory",
+      "sub": "BA, Computer Science",
+      "blurb": "BA, Computer Science — Emory University."
+    },
+    {
+      "id": "villanova",
+      "type": "school",
+      "label": "Villanova",
+      "sub": "MS, Computer Science",
+      "blurb": "MS, Computer Science — Villanova University."
+    },
+    {
+      "id": "wake-forest",
+      "type": "school",
+      "label": "Wake Forest",
+      "sub": "MBA",
+      "blurb": "MBA — Wake Forest University."
+    },
+    {
+      "id": "build-for-real-people",
+      "type": "principle",
+      "label": "Build for real people",
+      "blurb": "Neighbors, volunteers, teams — the people who use a thing, not only the people who buy it. If it needs explaining twice, it is not finished."
+    },
+    {
+      "id": "between-it-and-business",
+      "type": "principle",
+      "label": "Between IT and the business",
+      "blurb": "Computer science plus an MBA is the working stance, not a detour. Software has to survive how organizations decide, buy, and change their minds."
+    },
+    {
+      "id": "architecture-and-domain-first",
+      "type": "principle",
+      "label": "Architecture and domain first",
+      "blurb": "The shape of the problem matters more than the newest stack. I start with how the work actually happens, then choose tools that can carry it."
+    },
+    {
+      "id": "why-signups-break",
+      "type": "note",
+      "label": "Why sign-ups break",
+      "sub": "Drafting",
+      "blurb": "A draft. Spreadsheets and group threads fail in the same few ways. Writing in progress."
+    },
+    {
+      "id": "naming-for-neighbors",
+      "type": "note",
+      "label": "Naming for neighbors",
+      "sub": "Drafting",
+      "blurb": "A draft. The words on a signup sheet have to sound like a person, not a product. Writing in progress."
+    },
+    {
+      "id": "demo-before-they-ask",
+      "type": "note",
+      "label": "Demo before they ask",
+      "sub": "Drafting",
+      "blurb": "A draft. Show the thing working before the slide that promises it. Writing in progress."
+    }
+  ],
+  "links": [
+    { "source": "cal", "target": "columbia", "rel": "lives in" },
+    { "source": "cal", "target": "github", "rel": "code on" },
+    { "source": "cal", "target": "linkedin", "rel": "writes on" },
+    { "source": "cal", "target": "invite", "rel": "open slot" },
+    { "source": "cal", "target": "cursor", "rel": "works at" },
+    { "source": "cal", "target": "rosterjoy", "rel": "building" },
+    { "source": "cal", "target": "emory", "rel": "studied at" },
+    { "source": "cal", "target": "villanova", "rel": "studied at" },
+    { "source": "cal", "target": "wake-forest", "rel": "studied at" },
+    { "source": "cal", "target": "build-for-real-people", "rel": "believes" },
+    { "source": "cal", "target": "between-it-and-business", "rel": "believes" },
+    { "source": "cal", "target": "architecture-and-domain-first", "rel": "believes" },
+    { "source": "cal", "target": "engineer", "rel": "started as" },
+    { "source": "engineer", "target": "leader", "rel": "then" },
+    { "source": "leader", "target": "architect", "rel": "then" },
+    { "source": "architect", "target": "founder", "rel": "then" },
+    { "source": "engineer", "target": "merrill", "rel": "Software Developer" },
+    { "source": "engineer", "target": "micropact", "rel": "built at" },
+    { "source": "engineer", "target": "secondmarket", "rel": "built at" },
+    { "source": "engineer", "target": "software-engineering", "rel": "practiced" },
+    { "source": "leader", "target": "infusion", "rel": "Senior / Lead Consultant" },
+    { "source": "leader", "target": "avanade", "rel": "Group Manager / Senior Consultant" },
+    { "source": "leader", "target": "fixflyer", "rel": "VP of Software Development" },
+    { "source": "leader", "target": "team-leadership", "rel": "practiced" },
+    { "source": "avanade", "target": "consulting", "rel": "includes" },
+    { "source": "leader", "target": "knowledge-graphs", "rel": "explored" },
+    { "source": "leader", "target": "customer-facing-demos", "rel": "practiced" },
+    { "source": "architect", "target": "cisco", "rel": "Senior Sales Engineer" },
+    { "source": "architect", "target": "mendix", "rel": "Senior Solutions Architect" },
+    { "source": "architect", "target": "cursor", "rel": "Solutions Architect" },
+    { "source": "architect", "target": "solutions-architecture", "rel": "practiced" },
+    { "source": "architect", "target": "customer-success", "rel": "practiced" },
+    { "source": "architect", "target": "sales-engineering", "rel": "practiced" },
+    { "source": "cursor", "target": "agentic-coding", "rel": "uses" },
+    { "source": "mendix", "target": "sso-sessions", "rel": "includes" },
+    { "source": "mendix", "target": "low-code", "rel": "includes" },
+    { "source": "mendix", "target": "aws-kubernetes", "rel": "includes" },
+    { "source": "founder", "target": "rosterjoy", "rel": "building" },
+    { "source": "rosterjoy", "target": "snacks", "rel": "for" },
+    { "source": "rosterjoy", "target": "meals", "rel": "for" },
+    { "source": "rosterjoy", "target": "volunteer", "rel": "for" },
+    { "source": "rosterjoy", "target": "potlucks", "rel": "for" },
+    { "source": "rosterjoy", "target": "go-to-market", "rel": "needs" },
+    { "source": "rosterjoy", "target": "why-signups-break", "rel": "about" },
+    { "source": "rosterjoy", "target": "naming-for-neighbors", "rel": "about" },
+    { "source": "architect", "target": "demo-before-they-ask", "rel": "drafting" },
+    { "source": "cisco", "target": "sales-engineering", "rel": "used" },
+    { "source": "cisco", "target": "customer-facing-demos", "rel": "used" },
+    { "source": "wake-forest", "target": "between-it-and-business", "rel": "shaped" },
+    { "source": "emory", "target": "software-engineering", "rel": "started" },
+    { "source": "cal", "target": "founder", "rel": "now" },
+    { "source": "rosterjoy", "target": "build-for-real-people", "rel": "embodies" }
+  ]
+}

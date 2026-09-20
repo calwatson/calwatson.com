@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Cal Watson</title>
+    <meta
+      name="description"
+      content="Founder and operator. Engineer who builds for real people. Building RosterJoy from Columbia, South Carolina."
+    />
+    <link rel="canonical" href="https://www.calwatson.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cal Watson" />
+    <meta
+      property="og:description"
+      content="Founder and operator. Engineer who builds for real people. Building RosterJoy from Columbia, South Carolina."
+    />
+    <meta property="og:url" content="https://www.calwatson.com/" />
+    <meta property="og:image" content="https://www.calwatson.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cal Watson" />
+    <meta
+      name="twitter:description"
+      content="Founder and operator. Engineer who builds for real people. Building RosterJoy from Columbia, South Carolina."
+    />
+    <meta name="twitter:image" content="https://www.calwatson.com/og.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Cal Watson",
+        "url": "https://www.calwatson.com/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Columbia",
+          "addressRegion": "SC",
+          "addressCountry": "US"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/jcfive",
+          "https://github.com/calwatson"
+        ],
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Emory University" },
+          { "@type": "CollegeOrUniversity", "name": "Villanova University" },
+          { "@type": "CollegeOrUniversity", "name": "Wake Forest University" }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <h1>Cal Watson</h1>
+          <p class="tagline">
+            Founder and operator. Engineer who builds for
+            <span class="tagline-highlight">real people</span>.
+          </p>
+        </div>
+        <div class="topbar-tools">
+          <input class="search" id="search" type="search" name="search" autocomplete="off" />
+          <button class="say-hi" id="say-hi" type="button" data-copy="say-hi">Say hi</button>
+        </div>
+      </header>
+      <div class="chips" id="chips" role="toolbar" aria-label="Filter node kinds"></div>
+      <div class="body">
+        <main class="canvas" id="graph">
+          <div class="zoom-controls">
+            <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+            <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+            <button id="zoom-reset" type="button" aria-label="Reset view">⤢</button>
+          </div>
+          <p class="hint">Drag to pan. Scroll to zoom. Drag a node to move it.</p>
+        </main>
+        <aside class="panel" id="panel" aria-live="polite"></aside>
+      </div>
+    </div>
+
+    <dialog class="contact" id="contact" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <form class="contact-card" method="dialog">
+        <h2 id="contact-title">Say hi</h2>
+        <p class="contact-lead">A short note is enough. LinkedIn works too if mail isn't handy.</p>
+        <fieldset class="reasons">
+          <legend class="visually-hidden">What this is about</legend>
+          <label><input type="radio" name="reason" value="Working together" checked /> Working together</label>
+          <label><input type="radio" name="reason" value="RosterJoy" /> RosterJoy</label>
+          <label><input type="radio" name="reason" value="Talking shop" /> Talking shop</label>
+          <label><input type="radio" name="reason" value="Just saying hi" /> Just saying hi</label>
+        </fieldset>
+        <label class="field">
+          <span>Your name</span>
+          <input name="name" autocomplete="name" placeholder="Sign here" />
+        </label>
+        <label class="field">
+          <span>A note</span>
+          <textarea name="note" placeholder="What's on your mind"></textarea>
+        </label>
+        <div class="contact-actions">
+          <button class="say-hi" type="button" data-send>Open mail</button>
+          <button type="button" data-close-modal>Close</button>
+        </div>
+        <p class="contact-status" data-status></p>
+      </form>
+    </dialog>
+
+    <section class="visually-hidden" id="plain">
+      <h2>About</h2>
+      <p>
+        Cal Watson is a founder and operator in Columbia, SC. Engineer who builds for real people.
+        This page is a map of the work, not a résumé.
+      </p>
+      <h2>RosterJoy</h2>
+      <p>
+        RosterJoy is elegant signup sheets for real life. Potlucks, meal trains, volunteer shifts,
+        snack schedules — name the moment, add the slots, send a link.
+      </p>
+      <h2>How I work</h2>
+      <p>Architecture and domain first. Between IT and the business. Build for real people.</p>
+      <h2>Path</h2>
+      <p>
+        Engineer, then Leader, then Architect / SE, now Founder. Organizations along the way:
+        Merrill Lynch, Micropact, Secondmarket, Infusion, Avanade, Fix Flyer, Cisco, Mendix, and
+        Cursor.
+      </p>
+      <h2>Education</h2>
+      <p>Emory. Villanova. Wake Forest.</p>
+      <h2>Elsewhere</h2>
+      <p>
+        LinkedIn at https://www.linkedin.com/in/jcfive and GitHub at https://github.com/calwatson.
+      </p>
+    </section>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
