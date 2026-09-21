@@ -121,6 +121,7 @@ let lastH = canvas.clientHeight;
 let fitFrame = 0;
 
 function canvasSize(): { w: number; h: number } {
+  if (!canvas) return { w: 0, h: 0 };
   return { w: canvas.clientWidth, h: canvas.clientHeight };
 }
 
