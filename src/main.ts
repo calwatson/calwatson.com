@@ -39,6 +39,14 @@ if (!canvas || !panelEl || !chipsEl || !dialog || !sayHi) {
   throw new Error("Missing shell elements");
 }
 
+function syncFrameHeight(): void {
+  const viewport = window.visualViewport;
+  const height = Math.round(viewport?.height ?? window.innerHeight);
+  document.documentElement.style.setProperty("--frame-h", `${height}px`);
+}
+
+syncFrameHeight();
+
 const initialHidden = new Set<GroupId>();
 if (isPhoneViewport()) {
   for (const [id, def] of Object.entries(groups)) {
@@ -116,24 +124,51 @@ zoomIn?.addEventListener("click", () => graph.zoomBy(1.2));
 zoomOut?.addEventListener("click", () => graph.zoomBy(1 / 1.2));
 zoomReset?.addEventListener("click", () => graph.fit());
 
-void document.fonts.ready.then(() => {
-  graph.fit();
-  requestAnimationFrame(() => graph.fit());
-});
-
 let lastW = canvas.clientWidth;
 let lastH = canvas.clientHeight;
-const onResize = debounce(() => {
-  const w = canvas.clientWidth;
-  const h = canvas.clientHeight;
+let fitFrame = 0;
+
+function canvasSize(): { w: number; h: number } {
+  if (!canvas) return { w: 0, h: 0 };
+  return { w: canvas.clientWidth, h: canvas.clientHeight };
+}
+
+function fitToCanvas(): void {
+  if (fitFrame) return;
+  fitFrame = requestAnimationFrame(() => {
+    fitFrame = 0;
+    const { w, h } = canvasSize();
+    if (w < 10 || h < 10) return;
+    graph.fit(0);
+  });
+}
+
+const relayoutToCanvas = debounce(() => {
+  const { w, h } = canvasSize();
+  if (w < 10 || h < 10) return;
   if (Math.abs(w - lastW) <= 24 && Math.abs(h - lastH) <= 60) return;
   lastW = w;
   lastH = h;
   layout = relayout(layout, w, h);
   drawGraph(handles, layout);
-  graph.fit();
+  graph.fit(0);
 }, 200);
-window.addEventListener("resize", onResize);
+
+function onCanvasSize(): void {
+  syncFrameHeight();
+  fitToCanvas();
+  relayoutToCanvas();
+}
+
+const canvasObserver = new ResizeObserver(onCanvasSize);
+canvasObserver.observe(canvas);
+window.addEventListener("resize", onCanvasSize);
+window.visualViewport?.addEventListener("resize", onCanvasSize);
+
+void document.fonts.ready.then(() => {
+  onCanvasSize();
+  requestAnimationFrame(onCanvasSize);
+});
 
 document.querySelector(".tagline-highlight")?.replaceChildren(copy.taglineHighlight);
 document.querySelectorAll("[data-copy='say-hi']").forEach((el) => {

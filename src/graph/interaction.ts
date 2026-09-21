@@ -15,7 +15,7 @@ export interface GraphController {
   revealGroup: (group: GroupId) => void;
   hiddenGroups: () => Set<GroupId>;
   selectedId: () => string | null;
-  fit: () => void;
+  fit: (duration?: number) => void;
   zoomBy: (factor: number) => void;
   reveal: (id: string) => void;
   currentFocus: () => string | null;
@@ -159,13 +159,14 @@ export function wireInteraction(
     handles.svg.transition().duration(duration).call(zoomBehavior.transform, next);
   }
 
-  function fit(): void {
+  function fit(duration = 450): void {
     const svgEl = handles.svg.node();
     if (!svgEl) return;
     const box = svgEl.getBoundingClientRect();
+    if (box.width < 10 || box.height < 10) return;
     const t = fitTransform(layout, hidden, box, bottomInset(), zoomBehavior);
     currentK = t.k;
-    applyZoomTransform(t, 450);
+    applyZoomTransform(t, duration);
   }
 
   function zoomBy(factor: number): void {
