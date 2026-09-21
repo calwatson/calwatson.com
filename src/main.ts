@@ -39,6 +39,14 @@ if (!canvas || !panelEl || !chipsEl || !dialog || !sayHi) {
   throw new Error("Missing shell elements");
 }
 
+function syncFrameHeight(): void {
+  const viewport = window.visualViewport;
+  const height = Math.round(viewport?.height ?? window.innerHeight);
+  document.documentElement.style.setProperty("--frame-h", `${height}px`);
+}
+
+syncFrameHeight();
+
 const initialHidden = new Set<GroupId>();
 if (isPhoneViewport()) {
   for (const [id, def] of Object.entries(groups)) {
@@ -147,6 +155,7 @@ const relayoutToCanvas = debounce(() => {
 }, 200);
 
 function onCanvasSize(): void {
+  syncFrameHeight();
   fitToCanvas();
   relayoutToCanvas();
 }
