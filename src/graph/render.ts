@@ -263,17 +263,15 @@ export function fitTransform(
   const bounds = visibleBounds(layout, hidden);
   if (!bounds) return zoomIdentity;
   const pad = 56;
-  const topPad = 28;
   const bw = bounds.maxX - bounds.minX + pad * 2;
-  const bh = bounds.maxY - bounds.minY + pad * 2 + topPad;
-  const availW = canvas.width;
-  const extraBottom = layout.metrics.compact ? 12 : 0;
-  const availH = Math.max(80, canvas.height - bottomInset - 30 - extraBottom);
+  const bh = bounds.maxY - bounds.minY + pad * 2;
+  const availW = Math.max(1, canvas.width);
+  const availH = Math.max(80, canvas.height - bottomInset);
   const k = clampK(Math.min(availW / bw, availH / bh));
   const cx = (bounds.minX + bounds.maxX) / 2;
-  const cy = (bounds.minY + bounds.maxY) / 2 - topPad / 2;
+  const cy = (bounds.minY + bounds.maxY) / 2;
   const tx = canvas.width / 2 - k * cx;
-  const ty = (canvas.height - bottomInset - extraBottom) / 2 - k * cy;
+  const ty = (canvas.height - bottomInset) / 2 - k * cy;
   void zoomBehavior;
   return zoomIdentity.translate(tx, ty).scale(k);
 }

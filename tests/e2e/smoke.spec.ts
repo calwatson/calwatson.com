@@ -86,6 +86,103 @@ test("no horizontal overflow", async ({ page }) => {
   }
 });
 
+test("shell and svg fill the viewport height", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".graph-svg")).toBeVisible();
+  const sizes = await page.evaluate(() => {
+    const app = document.querySelector(".app");
+    const canvas = document.querySelector(".canvas");
+    const svg = document.querySelector(".graph-svg");
+    if (!app || !canvas || !svg) return null;
+    const appBox = app.getBoundingClientRect();
+    const canvasBox = canvas.getBoundingClientRect();
+    const svgBox = svg.getBoundingClientRect();
+    return {
+      innerHeight: window.innerHeight,
+      appHeight: appBox.height,
+      canvasHeight: canvasBox.height,
+      svgHeight: svgBox.height,
+      leftoverBelowApp: window.innerHeight - appBox.bottom,
+      svgGap: Math.abs(svgBox.height - canvasBox.height),
+    };
+  });
+  expect(sizes).not.toBeNull();
+  expect(sizes!.leftoverBelowApp).toBeLessThanOrEqual(1);
+  expect(Math.abs(sizes!.appHeight - sizes!.innerHeight)).toBeLessThanOrEqual(1);
+  expect(sizes!.svgGap).toBeLessThanOrEqual(1);
+  expect(sizes!.canvasHeight).toBeGreaterThan(200);
+});
+
+test("graph refits when viewport height changes", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "phone", "phone project already uses a tall viewport");
+  await page.goto("/");
+  await expect(page.locator(".node")).toHaveCount(45);
+  await page.waitForTimeout(700);
+
+  await page.setViewportSize({ width: 1440, height: 620 });
+  await page.waitForTimeout(500);
+  const short = await page.evaluate(() => {
+    const canvas = document.querySelector(".canvas");
+    const svg = document.querySelector(".graph-svg");
+    const nodes = [...document.querySelectorAll(".node")];
+    if (!canvas || !svg || !nodes.length) return null;
+    const svgBox = svg.getBoundingClientRect();
+    let minY = Infinity;
+    let maxY = -Infinity;
+    for (const node of nodes) {
+      const box = node.getBoundingClientRect();
+      minY = Math.min(minY, box.top);
+      maxY = Math.max(maxY, box.bottom);
+    }
+    return {
+      innerHeight: window.innerHeight,
+      appHeight: document.querySelector(".app")?.getBoundingClientRect().height ?? 0,
+      svgHeight: svgBox.height,
+      canvasHeight: canvas.getBoundingClientRect().height,
+      spaceBelow: svgBox.bottom - maxY,
+      spaceAbove: minY - svgBox.top,
+      fillY: (maxY - minY) / svgBox.height,
+    };
+  });
+  expect(short).not.toBeNull();
+  expect(short!.appHeight).toBeCloseTo(short!.innerHeight, 0);
+  expect(Math.abs(short!.svgHeight - short!.canvasHeight)).toBeLessThanOrEqual(1);
+  expect(short!.spaceBelow).toBeGreaterThanOrEqual(-8);
+  expect(short!.spaceAbove).toBeGreaterThanOrEqual(-8);
+  expect(short!.fillY).toBeGreaterThan(0.55);
+
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.waitForTimeout(500);
+  const tall = await page.evaluate(() => {
+    const svg = document.querySelector(".graph-svg");
+    const canvas = document.querySelector(".canvas");
+    const nodes = [...document.querySelectorAll(".node")];
+    if (!canvas || !svg || !nodes.length) return null;
+    const svgBox = svg.getBoundingClientRect();
+    let minY = Infinity;
+    let maxY = -Infinity;
+    for (const node of nodes) {
+      const box = node.getBoundingClientRect();
+      minY = Math.min(minY, box.top);
+      maxY = Math.max(maxY, box.bottom);
+    }
+    return {
+      innerHeight: window.innerHeight,
+      appHeight: document.querySelector(".app")?.getBoundingClientRect().height ?? 0,
+      svgHeight: svgBox.height,
+      canvasHeight: canvas.getBoundingClientRect().height,
+      spaceBelow: svgBox.bottom - maxY,
+      fillY: (maxY - minY) / svgBox.height,
+    };
+  });
+  expect(tall).not.toBeNull();
+  expect(tall!.appHeight).toBeCloseTo(tall!.innerHeight, 0);
+  expect(Math.abs(tall!.svgHeight - tall!.canvasHeight)).toBeLessThanOrEqual(1);
+  expect(tall!.svgHeight).toBeGreaterThan(short!.svgHeight + 200);
+  expect(tall!.spaceBelow).toBeGreaterThanOrEqual(-8);
+  expect(tall!.fillY).toBeGreaterThan(0.55);
+});
+
 test("address is absent before click", async ({ page }) => {
   await page.goto("/");
   const html = await page.evaluate(() => document.documentElement.outerHTML);

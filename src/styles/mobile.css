@@ -8,10 +8,14 @@
   .body {
     display: block;
     position: relative;
+    min-height: 0;
+    height: auto;
   }
 
   .canvas {
-    height: 100%;
+    position: absolute;
+    inset: 0;
+    height: auto;
   }
 
   .panel {
