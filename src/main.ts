@@ -12,6 +12,7 @@ import "./styles/panel.css";
 import "./styles/modal.css";
 import "./styles/mobile.css";
 
+import { initAnalytics } from "./analytics.ts";
 import { copy, groupOf, links, nodes } from "./data/graph.ts";
 import { groups } from "./data/graph.ts";
 import { buildLayout, relayout, type LayoutResult } from "./graph/layout.ts";
@@ -24,6 +25,8 @@ import { mountSearch } from "./ui/search.ts";
 import { debounce, isPhoneViewport } from "./util.ts";
 import type { GraphNode } from "./graph/types.ts";
 import type { GroupId } from "./graph/types.ts";
+
+initAnalytics();
 
 const canvas = document.getElementById("graph");
 const panelEl = document.getElementById("panel");
@@ -61,6 +64,8 @@ function requireNode(id: string): GraphNode {
 }
 
 const modal = mountContactModal(dialog);
+// Closed over by the panel before `wireInteraction` assigns it.
+// eslint-disable-next-line prefer-const -- single assignment, but it has to stay `let`
 let graph!: GraphController;
 let layout: LayoutResult = buildLayout(nodes, links, canvas.clientWidth, canvas.clientHeight);
 const handles = createSvg(canvas);

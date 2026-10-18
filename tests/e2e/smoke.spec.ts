@@ -22,6 +22,13 @@ test("page loads without console errors or third-party requests", async ({ page 
   expect(foreign, foreign.join("\n")).toEqual([]);
 });
 
+test("injects the Vercel Web Analytics script once", async ({ page }) => {
+  await page.goto("/");
+  const scripts = page.locator('script[data-sdkn="@vercel/analytics"]');
+  await expect(scripts).toHaveCount(1);
+  await expect(scripts).toHaveAttribute("src", "/_vercel/insights/script.js");
+});
+
 test("node visibility and Mendix panel", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.locator(".node")).toHaveCount(45);

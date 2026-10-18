@@ -25,4 +25,6 @@ Content lives in `src/data/graph.data.json`. Behavior is specified in `HANDOFF.m
 
 Vercel project, framework preset Vite, output `dist`. Primary host `www.calwatson.com`; apex redirects to www.
 
+Page views are reported with Vercel Web Analytics (`@vercel/analytics`). Web Analytics must also be enabled in the Vercel project dashboard (Analytics tab) or data will not show up.
+
 The contact address is assembled at click time from `src/config.ts` (placeholder `hello@calwatson.com`) and must not appear in the HTML or DOM beforehand.

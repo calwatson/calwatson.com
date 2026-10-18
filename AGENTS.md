@@ -21,7 +21,7 @@ Run `typecheck`, `test`, and `build` after every milestone before committing.
 - Keep the palette in `src/styles/tokens.css` (one dark theme, no light theme, no toggle).
 - Keep node shapes and layout targets exactly as specified in `HANDOFF.md` section 5. The four chapters form a spine: left to right on landscape, top to bottom on portrait, earlier to now. Never break that ordering.
 - D3: import modules (`d3-force`, `d3-selection`, `d3-zoom`, `d3-drag`, `d3-shape`, `d3-transition`, `d3-array`), never the `d3` bundle.
-- No UI framework, router, state library, CSS framework, analytics, cookies, or third-party requests. Fonts are self-hosted via `@fontsource`.
+- No UI framework, router, state library, CSS framework, cookies, or third-party requests. Fonts are self-hosted via `@fontsource`. Vercel Web Analytics is the exception: call `inject()` from `@vercel/analytics` once at startup.
 - The contact email address must never appear in `index.html`, the DOM, or any `href` before the click. It is assembled from `src/config.ts` inside the submit handler. The value in `config.ts` is a placeholder; do not invent a real address.
 - TypeScript strict mode, no `any`, small single-purpose modules.
 - Accessibility is required: keyboard-operable nodes, visible focus, a static visually hidden plain-text version of the site in `index.html`, `prefers-reduced-motion` respected, contact modal focus trap.
