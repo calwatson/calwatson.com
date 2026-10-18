@@ -24,7 +24,7 @@ Cal is a founder and engineer in Columbia, SC. He is building **RosterJoy** (ros
 | Contact | `mailto:` link built at click time so the address is never in the HTML or DOM |
 | Look | One dark green-black theme. No light theme, no theme toggle |
 | Routing | None. Single page |
-| Analytics / cookies | None |
+| Analytics / cookies | Vercel Web Analytics only (`@vercel/analytics` `inject()`). Cookieless. No other analytics. |
 | Copy | Cal's words. Do not rewrite, "improve", or add copy |
 
 ## 3. What is in this bundle
@@ -284,7 +284,7 @@ D3's `.style()` writes through the CSSOM, which CSP allows. If any inline style 
 
 ## 14. Do not
 
-- Add a framework, router, state library, CSS framework, or analytics.
+- Add a framework, router, state library, CSS framework, or analytics other than Vercel Web Analytics.
 - Rewrite or add copy, rename nodes, or add nodes without Cal's approval.
 - Change the palette, node shapes, or layout targets.
 - Put the contact address in the HTML, DOM, or a pre-click `href`.
