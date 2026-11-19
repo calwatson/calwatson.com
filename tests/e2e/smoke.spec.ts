@@ -11,7 +11,11 @@ test("page loads without console errors or third-party requests", async ({ page 
   });
   page.on("request", (req) => {
     const url = req.url();
-    if (url.startsWith("http://127.0.0.1") || url.startsWith("http://localhost") || url.startsWith("data:")) {
+    if (
+      url.startsWith("http://127.0.0.1") ||
+      url.startsWith("http://localhost") ||
+      url.startsWith("data:")
+    ) {
       return;
     }
     foreign.push(url);
@@ -188,6 +192,99 @@ test("graph refits when viewport height changes", async ({ page }, testInfo) => 
   expect(tall!.svgHeight).toBeGreaterThan(short!.svgHeight + 200);
   expect(tall!.spaceBelow).toBeGreaterThanOrEqual(-8);
   expect(tall!.fillY).toBeGreaterThan(0.55);
+});
+
+test("RosterJoy mentions link without nofollow", async ({ page }, testInfo) => {
+  const home = "https://www.rosterjoy.com/";
+  await page.context().route(/https:\/\/www\.rosterjoy\.com\/.*/, (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "text/html",
+      body: "<!doctype html><title>RosterJoy</title><p>RosterJoy</p>",
+    }),
+  );
+  await page.goto("/");
+
+  const plainLinks = page.locator("#plain a");
+  await expect(plainLinks).toHaveCount(2);
+  await expect(plainLinks.nth(0)).toHaveAttribute("href", home);
+  await expect(plainLinks.nth(1)).toHaveAttribute("href", home);
+  await expect(plainLinks.nth(0)).toHaveText("RosterJoy");
+
+  const chip = page.locator(".chip-brand");
+  const chipLink = chip.locator("a");
+  await expect(chipLink).toHaveAttribute("href", home);
+  await expect(chipLink).toHaveAttribute("rel", "noopener");
+  await expect(chipLink).toHaveText("RosterJoy");
+
+  const labelLink = page.locator("a.label-link");
+  await expect(labelLink).toHaveCount(1);
+  await expect(labelLink).toHaveAttribute("href", home);
+  await expect(labelLink).toHaveAttribute("rel", "noopener");
+  await expect(labelLink).toHaveText("RosterJoy");
+
+  const chipPopup = page.waitForEvent("popup");
+  await chipLink.click();
+  const chipPage = await chipPopup;
+  await expect(chipPage).toHaveURL(home);
+  await chipPage.close();
+  await expect(chip.locator("button")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('.node[data-id="rosterjoy"]')).not.toHaveClass(/is-hidden/);
+
+  await chip.locator("button").click();
+  await expect(chip.locator("button")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator('.node[data-id="rosterjoy"]')).toHaveClass(/is-hidden/);
+  await chip.locator(".glyph").click();
+  await expect(chip.locator("button")).toHaveAttribute("aria-pressed", "true");
+
+  await page.locator('.node[data-id="rosterjoy"]').click();
+  const panel = page.locator("#panel");
+  await expect(panel.locator("a.text-link")).toHaveCount(3);
+  for (const link of await panel.locator("a.text-link").all()) {
+    await expect(link).toHaveAttribute("href", home);
+    await expect(link).toHaveAttribute("rel", "noopener");
+  }
+  const visit = panel.locator("a.panel-action");
+  await expect(visit).toHaveAttribute("href", home);
+  await expect(visit).toHaveAttribute("rel", "noopener");
+  await expect(visit).toHaveText("rosterjoy.com");
+
+  await page.locator('.node[data-id="founder"]').click();
+  const founderBlurb = panel.locator(".panel-blurb a");
+  await expect(founderBlurb).toHaveCount(1);
+  await expect(founderBlurb).toHaveAttribute("href", home);
+  await expect(founderBlurb).toHaveText("RosterJoy");
+  const founderConn = panel.locator("a.conn-label");
+  await expect(founderConn).toHaveAttribute("href", home);
+  await expect(founderConn).toHaveAttribute("rel", "noopener");
+
+  await page.locator('.node[data-id="volunteer"]').click();
+  await expect(panel.locator(".panel-kicker a")).toHaveAttribute("href", home);
+  await expect(panel.locator('a[href="https://www.rosterjoy.com/for/pta"]')).toHaveCount(0);
+
+  await page.locator('.node[data-id="rosterjoy"]').click();
+  await panel.getByRole("button", { name: /Go-to-market/ }).click();
+  await expect(panel.locator(".panel-blurb a")).toHaveAttribute("href", home);
+  await expect(panel.locator(".panel-blurb a")).toHaveText("RosterJoy");
+
+  if (testInfo.project.name !== "phone") {
+    await page.locator('.node[data-id="cal"]').click();
+    await page.keyboard.press("Escape");
+    const labelPopup = page.waitForEvent("popup");
+    await labelLink.click();
+    const labelPage = await labelPopup;
+    await expect(labelPage).toHaveURL(home);
+    await labelPage.close();
+    await expect(panel).toContainText("quieter alternative");
+  }
+
+  const rels = await page
+    .locator('a[href*="rosterjoy.com"]')
+    .evaluateAll((els) => els.map((el) => el.getAttribute("rel")));
+  expect(rels.length).toBeGreaterThan(3);
+  for (const rel of rels) {
+    expect(rel).toBe("noopener");
+  }
 });
 
 test("address is absent before click", async ({ page }) => {
