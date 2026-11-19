@@ -11,6 +11,7 @@ import {
 } from "d3-shape";
 import { zoomIdentity, type ZoomBehavior, type ZoomTransform } from "d3-zoom";
 import { groups, typeStyles } from "../data/graph.ts";
+import { mentionsRosterJoy, rosterJoyHref } from "../ui/rosterjoy-link.ts";
 import type { GroupId, ShapeKind } from "./types.ts";
 import { LEAF_TYPES } from "./types.ts";
 import type { LayoutLink, LayoutNode, LayoutResult } from "./layout.ts";
@@ -34,6 +35,31 @@ export interface RenderHandles {
   edges: Sel<SVGGElement>;
   edgeLabels: Sel<SVGGElement>;
   nodes: Sel<SVGGElement>;
+}
+
+function paintLabel(g: Sel<SVGGElement>, d: LayoutNode): void {
+  g.select("a.label-link").remove();
+  g.selectAll("text.label").remove();
+
+  const style = typeStyles[d.type];
+  const display = d.type === "person" || d.type === "arc" || d.type === "product";
+  const linked = mentionsRosterJoy(d.label);
+  const host = linked
+    ? g
+        .append("a")
+        .attr("class", "label-link")
+        .attr("href", rosterJoyHref(`${d.label} ${d.sub ?? ""} ${d.blurb}`))
+        .attr("target", "_blank")
+        .attr("rel", "noopener")
+    : g;
+
+  host
+    .append("text")
+    .attr("class", "label")
+    .classed("display", display)
+    .attr("y", style.r + 14)
+    .attr("text-anchor", "middle")
+    .text(d.label);
 }
 
 function colorVar(node: LayoutNode): string {
@@ -106,16 +132,20 @@ export function drawGraph(handles: RenderHandles, layout: LayoutResult): void {
     .selectAll<SVGGElement, LayoutNode>("g.node")
     .data(layout.nodes, (d) => d.id)
     .join((enter) => {
-      const g = enter.append("g").attr("class", "node").attr("data-id", (d) => d.id);
-      g.append("circle").attr("class", "hit");
-      g.append("path").attr("class", "symbol");
-      g.append("text").attr("class", "label");
+      const g = enter
+        .append("g")
+        .attr("class", "node")
+        .attr("data-id", (d) => d.id);
+      const control = g.append("g").attr("class", "node-control");
+      control.append("circle").attr("class", "hit");
+      control.append("path").attr("class", "symbol");
       return g;
     });
 
+  nodeSel.attr("data-type", (d) => d.type).attr("data-group", (d) => typeStyles[d.type].group);
+
   nodeSel
-    .attr("data-type", (d) => d.type)
-    .attr("data-group", (d) => typeStyles[d.type].group)
+    .select(".node-control")
     .attr("tabindex", 0)
     .attr("role", "button")
     .attr("aria-label", (d) => `${d.label}, ${groups[typeStyles[d.type].group].kind}`);
@@ -131,25 +161,22 @@ export function drawGraph(handles: RenderHandles, layout: LayoutResult): void {
       const style = typeStyles[d.type];
       return symbol(SHAPES[style.shape], style.size)() ?? "";
     })
-    .attr("fill", (d) => (d.type === "arc" || d.type === "invite" || d.type === "principle" ? "var(--bg)" : colorVar(d)))
+    .attr("fill", (d) =>
+      d.type === "arc" || d.type === "invite" || d.type === "principle" ? "var(--bg)" : colorVar(d),
+    )
     .attr("stroke", (d) => colorVar(d))
     .attr("stroke-width", (d) => {
       if (d.type === "arc" || d.type === "invite") return 2.4;
       if (d.type === "principle" || d.type === "note") return 1.6;
       return 1.1;
     })
-    .attr("stroke-dasharray", (d) =>
-      d.type === "invite" || d.type === "note" ? "3.5 3" : null,
-    )
+    .attr("stroke-dasharray", (d) => (d.type === "invite" || d.type === "note" ? "3.5 3" : null))
     .classed("now", (d) => Boolean(d.now))
     .classed("pulse", (d) => d.type === "invite" && !prefersReducedMotion());
 
-  nodeSel
-    .select<SVGTextElement>(".label")
-    .attr("y", (d) => typeStyles[d.type].r + 14)
-    .attr("text-anchor", "middle")
-    .text((d) => d.label)
-    .classed("display", (d) => d.type === "person" || d.type === "arc" || d.type === "product");
+  nodeSel.each(function (d) {
+    paintLabel(select(this), d);
+  });
 
   tick(layout);
 }
@@ -178,21 +205,27 @@ export function tick(layout: LayoutResult): void {
       return (d.source.y + d.target.y) / 2 - 6;
     });
 
-  svg.selectAll<SVGGElement, LayoutNode>(".node").attr("transform", (d) => `translate(${d.x},${d.y})`);
+  svg
+    .selectAll<SVGGElement, LayoutNode>(".node")
+    .attr("transform", (d) => `translate(${d.x},${d.y})`);
 }
 
 export function applyHiddenGroups(hidden: ReadonlySet<GroupId>): void {
   const svg = select(".graph-svg");
-  svg.selectAll<SVGGElement, LayoutNode>(".node").classed("is-hidden", (d) =>
-    hidden.has(typeStyles[d.type].group),
-  );
+  svg
+    .selectAll<SVGGElement, LayoutNode>(".node")
+    .classed("is-hidden", (d) => hidden.has(typeStyles[d.type].group));
   svg.selectAll<SVGLineElement, LayoutLink>(".edge").classed("is-hidden", (d) => {
     if (typeof d.source !== "object" || typeof d.target !== "object") return false;
-    return hidden.has(typeStyles[d.source.type].group) || hidden.has(typeStyles[d.target.type].group);
+    return (
+      hidden.has(typeStyles[d.source.type].group) || hidden.has(typeStyles[d.target.type].group)
+    );
   });
   svg.selectAll<SVGTextElement, LayoutLink>(".edge-label").classed("is-hidden", (d) => {
     if (typeof d.source !== "object" || typeof d.target !== "object") return false;
-    return hidden.has(typeStyles[d.source.type].group) || hidden.has(typeStyles[d.target.type].group);
+    return (
+      hidden.has(typeStyles[d.source.type].group) || hidden.has(typeStyles[d.target.type].group)
+    );
   });
 }
 

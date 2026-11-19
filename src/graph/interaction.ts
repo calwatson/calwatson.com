@@ -4,7 +4,13 @@ import "d3-transition";
 import { neighborsOf } from "../data/graph.ts";
 import type { GroupId } from "./types.ts";
 import type { LayoutNode, LayoutResult } from "./layout.ts";
-import { applyHiddenGroups, applyHighlight, fitTransform, tick, type RenderHandles } from "./render.ts";
+import {
+  applyHiddenGroups,
+  applyHighlight,
+  fitTransform,
+  tick,
+  type RenderHandles,
+} from "./render.ts";
 import { isPhoneViewport, prefersReducedMotion } from "../util.ts";
 
 export interface GraphController {
@@ -63,6 +69,13 @@ export function wireInteraction(
   handles.svg.on("dblclick.zoom", null);
 
   const nodeDrag = drag<SVGGElement, LayoutNode>()
+    .filter((event: Event) => {
+      if ("ctrlKey" in event && (event as MouseEvent).ctrlKey) return false;
+      if ("button" in event && (event as MouseEvent).button) return false;
+      const target = event.target;
+      if (target instanceof Element && target.closest("a")) return false;
+      return true;
+    })
     .on("start", (event, d) => {
       if (!event.active) layout.simulation.alphaTarget(0.25).restart();
       d.fx = d.x;

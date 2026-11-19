@@ -90,6 +90,10 @@
   padding: 0;
 }
 
+.panel-connections li {
+  border-bottom: 1px solid var(--line);
+}
+
 .conn {
   display: flex;
   flex-direction: column;
@@ -97,9 +101,17 @@
   width: 100%;
   background: none;
   border: 0;
-  border-bottom: 1px solid var(--line);
   padding: 8px 0;
   text-align: left;
+}
+
+.panel-connections li:has(> a.conn-label) .conn {
+  padding-bottom: 0;
+}
+
+.panel-connections a.conn-label {
+  display: block;
+  padding-bottom: 8px;
 }
 
 .conn-rel {

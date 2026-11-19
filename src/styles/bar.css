@@ -130,3 +130,24 @@
 .chip[aria-pressed="false"] {
   opacity: 0.45;
 }
+
+.chip-brand > button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+}
+
+.chip-brand.is-on {
+  color: var(--ink);
+}
+
+.chip-product.chip-brand.is-on {
+  border-color: var(--c-product);
+}
+
+.chip-brand:not(.is-on) {
+  opacity: 0.45;
+}

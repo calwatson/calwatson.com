@@ -73,6 +73,18 @@
   pointer-events: none;
 }
 
+.node a.label-link {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.node a.label-link .label {
+  fill: var(--c-arc);
+  pointer-events: auto;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .node .label.display {
   font-family: var(--font-display);
   font-weight: 800;
@@ -84,7 +96,8 @@
 }
 
 .node.focus .symbol,
-.node:focus-visible .symbol {
+.node:focus-visible .symbol,
+.node:focus-within .symbol {
   filter: drop-shadow(0 0 8px color-mix(in srgb, var(--c-arc) 70%, transparent));
 }
 
